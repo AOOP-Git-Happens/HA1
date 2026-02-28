@@ -1,3 +1,5 @@
+// Idea: this takes the information from the player and converts this states into visual instructions. Careful this only is for 1 square
+
 using System.Windows.Input;
 //toolkit for ObservableProperty
 using CommunityToolkit.Mvvm.ComponentModel;

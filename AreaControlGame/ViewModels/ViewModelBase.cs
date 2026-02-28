@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿// Idea: 
+
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AreaControlGame.ViewModels;
 

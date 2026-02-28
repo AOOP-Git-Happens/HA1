@@ -1,3 +1,5 @@
+// Idea: this file is for loading and saving the current situation. Bassicly it needs to convert the boards situation into the txt or the other way around
+
 using System;
 using System.IO;
 using System.Text;

@@ -1,3 +1,5 @@
+//Idea: this is the brain of the system. It connects to the other files. You write in here for all rules/setup stuff
+
 using System;
 namespace AreaControlGame.Models;
 
@@ -46,5 +48,5 @@ public class GameState
     // public bool IsLegalMove(int row, int column, CellState player)
     // {
         
-    // }
+    // }    
 }
