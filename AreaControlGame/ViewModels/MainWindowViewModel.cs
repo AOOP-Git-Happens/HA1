@@ -9,6 +9,9 @@ public partial class MainWindowViewModel : ViewModelBase
     // changes the greeting to the grid size
     public string Greeting { get; private set; }
 
+    public int Rows { get; private set; }
+    public int Cols { get; private set; }
+
     public MainWindowViewModel()
     {
         {
@@ -22,8 +25,8 @@ public partial class MainWindowViewModel : ViewModelBase
             // 3 - give information to constructor
             var gameState = new GameState(height, width);
 
-            // just as test to see if it works
-             Greeting = $"Grid {height} x {width}";
+            // just as test to see if it works:
+            //Greeting = $"Grid {height} x {width}";
             
         }
     }
