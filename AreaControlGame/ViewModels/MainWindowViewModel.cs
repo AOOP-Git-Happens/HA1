@@ -9,8 +9,10 @@ public partial class MainWindowViewModel : ViewModelBase
     // changes the greeting to the grid size
     public string Greeting { get; private set; }
 
-    public int Rows { get; private set; }
-    public int Cols { get; private set; }
+    public static int Rows_user_set { get; private set; }
+    public static int Cols_user_set { get; private set; }
+
+    public static bool update_flag = false;
 
     public MainWindowViewModel()
     {
@@ -19,11 +21,13 @@ public partial class MainWindowViewModel : ViewModelBase
             string data_from_txt = File.ReadAllText("Assets/settings.txt");
 
             // 2 - point the program to position 0 (height) and 2 (width)
-            int height = int.Parse(data_from_txt[0].ToString());
-            int width = int.Parse(data_from_txt[2].ToString());
+            Rows_user_set = int.Parse(data_from_txt[0].ToString());
+            Cols_user_set = int.Parse(data_from_txt[2].ToString());
 
             // 3 - give information to constructor
-            var gameState = new GameState(height, width);
+            var gameState = new GameState(Rows_user_set, Cols_user_set);
+
+            update_flag = true;
 
             // just as test to see if it works:
             //Greeting = $"Grid {height} x {width}";
@@ -31,3 +35,4 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 }
+
