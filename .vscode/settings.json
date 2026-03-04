@@ -1,3 +1,4 @@
 {
-    "dotnet.defaultSolution": "AreaControlGame.sln"
+    "dotnet.defaultSolution": "AreaControlGame.sln",
+    "terminal.integrated.cwd": "${workspaceFolder}/AreaControlGame" // I was feed up pressing cd areacontrolgame in the console
 }
