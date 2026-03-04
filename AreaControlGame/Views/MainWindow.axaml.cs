@@ -1,86 +1,80 @@
 using AreaControlGame.ViewModels;
-using System.Data;
 using AreaControlGame.Models;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
-using System.Threading.Tasks;
 
 namespace AreaControlGame.Views;
 
 public partial class MainWindow : Window
 {
-    int Rows = 0;//= MainWindowViewModel.Rows_user_set; //NEEDS TO BE CHANGES
-    int Cols = 0;//= MainWindowViewModel.Cols_user_set; //NEEDS TO BE CHANGED
     private readonly IBrush _baseColor = Brushes.LightGray; //this is the normal tile colour
     private readonly IBrush _p1Color = Brushes.Blue; //color that the tile should be if player 1 occupies
     private readonly IBrush _p2Color = Brushes.Red; //color that the tile should be if player 2 occupies
-    private int[,] _cellsMatrix; 
     
     public MainWindow() 
     {
-        InitializeComponent();
+        InitializeComponent(); // builts avalonia ui
         
-        WaitForFlag();
-        //InitGrid();
+        var viewModel = new MainWindowViewModel(); //I be honest no idea what that does rly but work @Alina pls help me 
+
+        InitGrid(viewModel.CurrentGame); //inits the grid with the current txt size file 
     }
 
-    private async void WaitForFlag() //the programm had the issue that it was too fast and it didnt wait to get Rows.user.set and just instanly made it 0
+    //Init the Grid
+    private void InitGrid(GameState gameState) 
     {
-        while (MainWindowViewModel.update_flag == false)
+        // reads the size from gamestate var
+        int rows = gameState.Height; 
+        int cols = gameState.Width;
+
+        // build grid
+        // creates the rows
+        for (int i = 0; i < rows; i++) 
         {
-            // waits a bit
-            await Task.Delay(100); 
+            PlayfieldGrid.RowDefinitions.Add(new RowDefinition()); //creates horizontal slice
+        }
+        
+        // creates the cols
+        for (int y = 0; y < cols; y++)
+        {
+            PlayfieldGrid.ColumnDefinitions.Add(new ColumnDefinition());
         }
 
-        // updates the numbers
-        Rows = MainWindowViewModel.Rows_user_set;
-        Cols = MainWindowViewModel.Cols_user_set;
-
-        // builds grid
-        InitGrid();
-    }
-
-    //Init the Grid with its function
-    private void InitGrid() 
-    {
-        
-        _cellsMatrix = new int[Rows, Cols]; //sets the size of the array (matrix) to the rows and collums
-
-        for (int i = 0; i < Rows; i++) 
+        // loop so all rows and collums get a cell
+        for (int i = 0; i < rows; i++) 
         {
-            PlayfieldGrid.RowDefinitions.Add(new RowDefinition()); 
-            PlayfieldGrid.ColumnDefinitions.Add(new ColumnDefinition());
-
-            for (int y = 0; y < Cols; y++)
+            for (int y = 0; y < cols; y++)
             {
+                // ask who owns this square
+                CellState cellValue = gameState.GetCell(i, y);
 
-                int cellValue = _cellsMatrix[i, y];
-
+                // rectangle as form
                 var child = new Rectangle
                 {
-                    Margin = new Avalonia.Thickness(3), 
+                    Margin = new Avalonia.Thickness(3), //outline
                 };
 
-                switch(cellValue)
+                // color the rectangle
+                if (cellValue == CellState.Player1)
                 {
-                    case 1:
-                        child.Fill = _p1Color;
-                        break;
-                    
-                    case 2:
-                        child.Fill = _p2Color;
-                        break;
-                    
-                    default:
-                        child.Fill = _baseColor;
-                        break;
+                    child.Fill = _p1Color;
+                }
+                else if (cellValue == CellState.Player2)
+                {
+                    child.Fill = _p2Color;
+                }
+                else
+                {
+                    child.Fill = _baseColor;
                 }
 
+                // give the rectangles the right postion in the grid
                 Grid.SetRow(child, i); 
                 Grid.SetColumn(child, y); 
                 
+                // Add it to the screen
                 PlayfieldGrid.Children.Add(child);
             }
         }

@@ -6,33 +6,19 @@ namespace AreaControlGame.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    // changes the greeting to the grid size
-    public string Greeting { get; private set; }
-
-    public static int Rows_user_set { get; private set; }
-    public static int Cols_user_set { get; private set; }
-
-    public static bool update_flag = false;
-
+    public GameState CurrentGame { get; private set; }
+    
     public MainWindowViewModel()
     {
-        {
-            // 1 - get info from the txt (Source: https://www.geeksforgeeks.org/c-sharp/how-to-read-and-write-a-text-file-in-c-sharp/ )
-            string data_from_txt = File.ReadAllText("Assets/settings.txt");
+        // 1 - get info from the txt (reads the entire thing) (Source: https://www.geeksforgeeks.org/c-sharp/how-to-read-and-write-a-text-file-in-c-sharp/ )
+        string data_from_txt = File.ReadAllText("Assets/settings.txt");
 
-            // 2 - point the program to position 0 (height) and 2 (width)
-            Rows_user_set = int.Parse(data_from_txt[0].ToString());
-            Cols_user_set = int.Parse(data_from_txt[2].ToString());
+        // 2 - extracts the numbers source:https://learn.microsoft.com/en-us/dotnet/csharp/how-to/parse-strings-using-split
+        string[] parts = data_from_txt.Split(' ');
+       
+        int cols = int.Parse(parts[0]); //sets the first part of the extraction + translate them from strings to int
+        int rows = int.Parse(parts[1]); //sets the seconds part of the extraion + translate them from strings to int
 
-            // 3 - give information to constructor
-            var gameState = new GameState(Rows_user_set, Cols_user_set);
-
-            update_flag = true;
-
-            // just as test to see if it works:
-            //Greeting = $"Grid {height} x {width}";
-            
-        }
+        CurrentGame = new GameState(rows, cols); // create a new GameState using our numbers and safes them   
     }
 }
-
