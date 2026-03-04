@@ -1,3 +1,5 @@
+// Idea: this file holds the players states it can be (empty, filled by p1, p2, ...). you write in here when you want to track a status 
+
 namespace AreaControlGame.Models;
 
 //pixel value, representing who is player

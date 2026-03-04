@@ -4,8 +4,9 @@ namespace AreaControlGame.Views;
 
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    public MainWindow() 
     {
-        InitializeComponent();
+        InitializeComponent(); // builts avalonia ui
+        
     }
 }

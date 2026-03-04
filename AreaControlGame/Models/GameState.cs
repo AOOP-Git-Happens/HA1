@@ -1,3 +1,5 @@
+//Idea: this is the brain of the system. It connects to the other files. You write in here for all rules/setup stuff
+
 using System;
 namespace AreaControlGame.Models;
 
@@ -31,6 +33,22 @@ public class GameState
     {
         return Board[row, column];
     }
+    
+    public void MakeMove(int row, int column)
+    {
+       //
+        Board[row, column] = CurrentPlayer; // updates the board with the right row/colum the player changes to
+
+        // swaps the playerss from p1 -> p2 -> p1 -> ...
+        if (CurrentPlayer == CellState.Player1) 
+        {
+            CurrentPlayer = CellState.Player2;
+        }
+        else 
+        {
+            CurrentPlayer = CellState.Player1;
+        }
+    }
 
     //first move of a player can be anywhere empty
 
@@ -46,5 +64,5 @@ public class GameState
     // public bool IsLegalMove(int row, int column, CellState player)
     // {
         
-    // }
+    // }    
 }

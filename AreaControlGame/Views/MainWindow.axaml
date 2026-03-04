@@ -10,11 +10,32 @@
         Title="AreaControlGame">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid RowDefinitions="Auto, *" Margin="0">
+        
+        <TextBlock Grid.Row="0" Margin="20 20 20 20" FontSize="20" FontWeight="Bold">GAME</TextBlock> 
 
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Cells}">
+            
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="{Binding Rows}" Columns="{Binding Columns}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:CellViewModel">
+                    <Button Background="{Binding CellColor}" 
+                            Command="{Binding ClickCellCommand}"
+                            Margin="3"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            
+        </ItemsControl>
+
+    </Grid>
 </Window>
