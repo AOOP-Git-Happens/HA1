@@ -50,34 +50,41 @@ public class GameState
         }
         MakePiece(row, column);
 
-        //draw - board is full
+        //draw board is full
         if (IsBoardFull())
         {
             Result = GameResult.Draw;
+            SaveFile.SaveToFile("Assets/settings.txt", this); // 
+            
             return true;
         }
-        //win - if next player has no legal moves - 
-        //current player wins
+        
+        //win - if next player has no legal moves - current player wins
         var nextPlayer = GetOtherPlayer(CurrentPlayer);
 
         if (!HasAnyLegalMove(nextPlayer))
         {
             Result = (CurrentPlayer == CellState.Player1 ? GameResult.Player1Wins : GameResult.Player2Wins);
+            SaveFile.SaveToFile("Assets/settings.txt", this);
             return true;
         }
+        
         //otherwise
         CurrentPlayer = nextPlayer;
+
+        // Auto-save the current state to a text file after a normal move
+        SaveFile.SaveToFile("Assets/settings.txt", this);
 
         return true;
     }
 
-    //Only places a piece; no rules, no switching
+    
     private void MakePiece(int row, int column)
     {
         Board[row, column] = CurrentPlayer; // updates the board with the right row/colum the player changes to
     }
 
-    //helper to be inside the scope(Board cannot be [-1,0])
+    //helper to be inside the scope)
     private bool IsInside(int row, int column)
     {
         return row >= 0 && column >= 0 && row < Height && column < Width;
