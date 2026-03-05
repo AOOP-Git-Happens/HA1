@@ -1,27 +1,41 @@
-// Idea: this file is for loading and saving the current situation. Bassicly it needs to convert the boards situation into the txt or the other way around
-
 using System;
 using System.IO;
 using System.Text;
 
 namespace AreaControlGame.Models;
 
-/*Remember format
-Height Width
-cell0 cell1 cell3 cell4 cellN
-0 - empty,
-1 - player1,
-2 - player2
-*/
 public static class SaveFile
 {
     public static void SaveToFile(string path, GameState game)
     {
-        throw new NotImplementedException();
+        StringBuilder sb = new StringBuilder();
+        
+        sb.AppendLine($"{game.Height} {game.Width}");
+
+        // gooes through the board and converts states to numbers
+        for (int row = 0; row < game.Height; row++)
+        {
+            for (int col = 0; col < game.Width; col++)
+            {
+                CellState currentCell = game.GetCell(row, col);
+                
+                int cellValue = currentCell switch
+                {
+                    CellState.Player1 => 1,
+                    CellState.Player2 => 2,
+                    _ => 0 // default
+                };
+
+                sb.Append(cellValue).Append(" ");
+            }
+        }
+
+        // creates new file
+        File.WriteAllText(path, sb.ToString().TrimEnd());
     }
 
-    public static GameState LoadFromFile(string path)
-    {
-        throw new NotImplementedException();
-    }
+    //public static GameState LoadFromFile(string path)
+    //{
+
+    //}
 }

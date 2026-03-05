@@ -25,7 +25,7 @@ public partial class CellViewModel : ObservableObject // partial treats the enti
         Row = row;
         Column = column;
         state = initialState; 
-        ClickCommand = clickCommand; //not state, but click command
+        ClickCommand = clickCommand;
     }
 
     public string CellColor
@@ -43,20 +43,4 @@ public partial class CellViewModel : ObservableObject // partial treats the enti
             }
         }
     }
-
-    // [RelayCommand]
-    // private void ClickCell()
-    // {
-    //     // 1. Logic: Don't allow changing the color if it is already occupied
-    //     if (State != CellState.Empty) return;
-
-    //     // 3. Brain: Tell the game state to record the move and swap turns
-    //     bool moved = _gameState.TryMakeMove(Row, Column);
-
-    //     if (!moved)
-    //     {
-    //         // 2. Visual: Set the visual state to the current player
-    //     State = _gameState.CurrentPlayer;
-    //     }
-    // }
 }
